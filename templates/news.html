@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <title>Flask Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="topnav">
+        <div class="logo">
+            <img src='https://cdn-icons-png.flaticon.com/512/1465/1465769.png' width="50px" height="50px"/>
+            <p>Crypto <br> Expert</p>
+        </div>
+        <div class="navbar">
+            <a href="/">Technical Analysis</a>
+            <a href="prediction">Prediction</a>
+            <a class="active" href="news">News</a>
+            <a href="eda">EDA</a>
+            <a href="about">About</a>
+        </div>
+    </div>
+    <div class="form-div">
+        <form action="/news" class="form-details">
+            <input class = 'nsearch' id='news_input' type="text" placeholder="News Query (eg: BTC or Bitcoin)" name="news_query"><br>
+            <input id = 'submit-btn' class="btn btn-primary" type="submit" value="Search">
+        </form>
+    </div>
+
+    <div id="container">
+        <!-- <div id = 'muji' class="news">
+            <div class="news_header">
+                <h3>Bitcoin PLunges heavily!</h3>
+                <p>zcsdcscsssssssssssssssssssssss</p>
+            </div>
+    
+            <div class="news_sentiment">
+                <p>8.5</p>
+            </div>
+        </div> -->
+    </div>
+</body>
+</html>
+
+<script>
+    document.getElementById("submit-btn").addEventListener('click', (e)=>{
+        e.preventDefault();
+        const q = document.getElementById('news_input').value;
+        const loading = document.createElement('p'); 
+        loading.style.display = 'flex';
+        loading.style.justifyContent = 'center';
+        loading.appendChild(document.createTextNode('Loading...'));
+        
+        if(q != ''){
+            parent = document.getElementById('container');
+            while (parent.firstChild) {
+                parent.removeChild(parent.firstChild);
+            }
+            
+            document.getElementById('container').append(loading);
+
+            fetch('/getnews?query='+q).then(
+                function(response){
+                    return response.json();
+            }).then((data)=>{
+                document.getElementById('container').innerHTML = '';
+                const arr = data.news_article.articles;
+                const sent = data.score;
+                
+                for(let i=0; i< arr.length; i++){
+                    const news_div = document.createElement('div'); news_div.className='news';
+                    const new_div = document.createElement("div");new_div.className='news_header'; 
+                    const sent_div = document.createElement('div'); sent_div.className='news_sentiment';               
+                    const title = document.createElement('a')
+                    title.href = (arr[i].url);
+                    const par = document.createElement('p');
+                    const des = document.createTextNode(arr[i].description);
+                    const heading = document.createTextNode(arr[i].title);
+                    const score = document.createElement('p');
+                    const sent_score = document.createTextNode((sent[i].sentiment.document.score).toString());
+                    if (parseFloat(sent[i].sentiment.document.score) < -0.5){
+                        sent_div.style.backgroundColor =  '#C70039'} 
+                    else if((parseFloat(sent[i].sentiment.document.score)< 0)){ 
+                        sent_div.style.backgroundColor = '#F88379';}
+                    else if((parseFloat(sent[i].sentiment.document.score)< 0.5)){
+                        sent_div.style.backgroundColor =  '#FFC300'} 
+                    else if ((parseFloat(sent[i].sentiment.document.score)<0.75)){
+                        sent_div.style.backgroundColor =  '#B4C424'}
+                    else{sent_div.style.backgroundColor =  '#50C878'}
+                    score.appendChild(sent_score); 
+                    sent_div.append(score);
+                    title.appendChild(heading);
+                    par.appendChild(des);
+                    new_div.append(title);
+                    new_div.append(par);
+                    news_div.append(new_div);
+                    news_div.append(sent_div)
+                    document.getElementById('container').append(news_div);
+                }
+            })
+        }
+    })
+</script>

@@ -24,5 +24,28 @@
             <a href="about">About</a>
         </div>
     </div>
+    {% for coin in coin_data %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ coin.name }}</h5>
+                <p class="card-text">Correlation: {{ coin.corr }}</p>
+                <img class="card-img-top" src="{{ url_for('static', filename='images/' + 'eda-' + coin.name.lower() + '.png') }}" alt="Card image cap">
+            </div>
+            <style>
+                .card {
+                    width: 18rem;
+                    margin: 1rem;
+                    display: inline-block;
+                }
+                .card-img-top {
+                    width: 100%;
+                    height: 15vw;
+                    object-fit: cover;
+                }
+            </style>
+        </div>
+    {% endfor %}
+    </div>
+
 </body>
 </html>

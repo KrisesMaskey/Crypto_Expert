@@ -1,0 +1,42 @@
+[
+  {
+    "name": "BTC",
+    "corr": -0.006840414619076562,
+    "image": "eda.png"
+  },
+  {
+    "name": "ETH",
+    "corr": 0.04257286589411783,
+    "image": "eda.png"
+  },
+  {
+    "name": "ADA",
+    "corr": 0.08402487900382923,
+    "image": "eda.png"
+  },
+  {
+    "name": "XRP",
+    "corr": -0.03416795747971846,
+    "image": "eda-xrp.png"
+  },
+  {
+    "name": "BNB",
+    "corr": 0.07897142240792471,
+    "image": "eda-bnb.png"
+  },
+  {
+    "name": "DOGE",
+    "corr": 0.009834205841303225,
+    "image": "eda-doge.png"
+  },
+  {
+    "name": "LINK",
+    "corr": 0.1486489902762048,
+    "image": "eda-link.png"
+  },
+  {
+    "name": "SOL",
+    "corr": -0.07773417712168845,
+    "image": "eda-sol.png"
+  }
+]

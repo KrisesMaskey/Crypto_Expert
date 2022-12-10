@@ -8,7 +8,9 @@ import requests
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 #from tensorflow.python.keras.backend import shape
-from keras.models import load_model
+# from keras.models import load_model
+import tflite_runtime.interpreter as tflite
+
 import matplotlib.pyplot as plt
 import csv
 # Which packages are required for io, urllib, and base64?
@@ -161,7 +163,7 @@ def getpred():
     mod_df = test_df[['Date', 'Close']]
 
     DataScaler = sc.fit(close_data)
-    regressor = load_model('./models/' + filemap[param])
+    regressor = tflite.Interpreter(model_path='./models/' + filemap[param])
     last_ten_prices = (close_data[-TimeSteps:])
     next_day_pred = []
     cnt = 0

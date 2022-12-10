@@ -7,7 +7,7 @@ from newsapi import NewsApiClient
 import requests
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow.python.keras.backend import shape
+#from tensorflow.python.keras.backend import shape
 from keras.models import load_model
 import matplotlib.pyplot as plt
 import csv
